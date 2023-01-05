@@ -14,7 +14,7 @@ class dif:
     polynomial = None
 #endregion
 
-#   Constructor
+    # Constructor
     def __init__(self,data):
         self.table = data
         self.data_size = len(self.table)
@@ -22,13 +22,13 @@ class dif:
     def showTable(self):
         print(DataFrame(self.table))
 
-#   Método para corregir datos
+    # Método para corregir datos
     def dataCorrection(self):
         row = int(input("Seleccione la fila a corregir: "))
         self.table[row][0] = float(input("Ingrese el valor de x: "))
         self.table[row][1] = float(input("Ingrese el valor de f(x): "))
 
-#   Método que ordena los datos
+    # Método que ordena los datos
     def bubble(self):
         for i in range(self.data_size):
             for j in range(self.data_size - 1):
@@ -37,7 +37,7 @@ class dif:
                     self.table[k], self.table[j] = self.table[j], self.table[k]
         return self.table
 
-#   Método que verifica la distancia entre puntos
+    # Método que verifica la distancia entre puntos
     def distanceCheck(self):
         self.h = self.table[self.data_size-1][0] - self.table[self.data_size-2][0]
         for i in range(self.data_size-1):
@@ -45,39 +45,38 @@ class dif:
                 print("Las distancias entre puntos son diferentes!")
                 return
 
-#   Método que obtiene la tablas de diferencias a partir de datos introducidos
+    # Método que obtiene la tablas de diferencias a partir de datos introducidos
     def setData(self):
         self.table = self.bubble()
         self.distanceCheck()
-
-    #   Crea un arreglo para la tabla de diferencias. Al ser una matriz cuadrada se desperdicia memoria
+        # Crea un arreglo para la tabla de diferencias. Al ser una matriz cuadrada se desperdicia memoria
         #self.table = [[None]*(data_size+1) for i in range(data_size)]
 
-    #   Crea un arreglo para la tabla, no desperdicia memoria
+        # Crea un arreglo para la tabla, no desperdicia memoria
         data = [None]*(self.data_size)
         k = self.data_size+1
         for i in range(self.data_size):
             if (i>0): k -= 1
             data[i] = [None]*k
 
-    #   Vacía los datos en la tabla.
+        # Vacía los datos en la tabla.
         for j in range(2):
             for i in range(self.data_size):
                 data[i][j] = self.table[i][j]
         self.table = data
 
-    #   Rellena la tabla de diferencias
+        # Rellena la tabla de diferencias
         k = self.data_size-1
         for j in range(self.data_size-1):
             for i in range(k):
                 self.table [i][j+2] = self.table[i+1][j+1] - self.table[i][j+1]
             k = k-1
 
-#   Método que muestra la tabla
+    # Método que muestra la tabla
     def showTab(self):
         print(DataFrame(self.table,columns=self.column_header))
 
-#   Método que pregunta por el valor a interpolar
+    # Método que pregunta por el valor a interpolar
     def getValue(self,point):
         self.setData()
         while self.point == None:
@@ -89,7 +88,7 @@ class dif:
                 point = float(input("¡El punto a interpolar esta fuera del rago de datos!\nElija otro: "))
                 self.point = None
 
-#   Método que interpola el valor deseado.
+    # Método que interpola el valor deseado.
     def getPolynomialValue(self,grad):
         if self.point == None:
             return "Tas mal"
